@@ -2,6 +2,8 @@ import React from "react";
 import classes from "./Square.module.css";
 
 const Square = props => {
+  // console.log("rendering square: ");
+  // console.log(props);
   return (
     <span
       className={classes.Square}

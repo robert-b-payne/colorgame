@@ -3,6 +3,7 @@ import "./App.css";
 // import Square from "./Square/Square";
 import Grid from "./Grid/Grid";
 import Title from "./Title/Title";
+import Menu from "./Menu/Menu";
 
 class App extends Component {
   state = {
@@ -95,7 +96,7 @@ class App extends Component {
         this.setState({ fadeInCounter: 0 });
         clearInterval(this.state.fadeInTimerId);
       }
-    }, 80);
+    }, 100);
     this.setState({ fadeInTimerId: timerId });
     for (let i = 0; i < (this.state.difficulty === "easy" ? 3 : 6); i++) {
       squareColors[i] = this.generateColor();
@@ -115,12 +116,27 @@ class App extends Component {
     });
   };
 
+  resetHandler = () => {
+    this.reset();
+  };
+
+  changeDifficultyHandler = difficulty => {
+    console.log("changeDifficultyHandler!");
+    this.setState({ difficulty: difficulty }, this.reset());
+  };
+
   render() {
     return (
       <div className="App">
         <Title
           correctColor={this.state.correctColor}
           backgroundColor={this.state.prevCorrectColor}
+        />
+        <Menu
+          resetHandler={this.resetHandler}
+          changeDifficultyHandler={difficulty =>
+            this.changeDifficultyHandler(difficulty)
+          }
         />
         <Grid
           difficulty={this.state.difficulty}

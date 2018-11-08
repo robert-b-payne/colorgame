@@ -4,6 +4,7 @@ import classes from "./Grid.module.css";
 //props:
 //squareColors[5]
 //difficulty: easy,hard
+//visibility[5]
 
 const Grid = props => {
   let gridRow1 = [];
@@ -19,7 +20,12 @@ const Grid = props => {
         visibility={props.visibility[i]}
       />
     );
-    if (props.difficulty === "hard")
+    if (
+      props.difficulty === "hard"
+      // &&
+      // props.squareColors[i + 3] &&
+      // props.visibility[i + 3]
+    )
       gridRow2.push(
         <Square
           color={props.squareColors[i + 3]}
@@ -30,6 +36,11 @@ const Grid = props => {
         />
       );
   }
+
+  // console.log("rendering gridRow1: ");
+  // console.log(gridRow1);
+  // console.log("rendering gridRow2: ");
+  // console.log(gridRow2);
 
   return (
     <React.Fragment>

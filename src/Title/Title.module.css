@@ -4,9 +4,9 @@
 
 .Title {
   margin-top: 0px;
-  margin-bottom: 60px;
   padding-top: 5px;
   padding-bottom: 5px;
   transition: 1s, all, ease-out;
   background-color: rgb(255, 0, 102);
+  transition: all 1s ease-out;
 }

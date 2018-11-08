@@ -1,0 +1,57 @@
+.Menu {
+  height: 21px;
+  background-color: white;
+  color: #006bb3;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 65px;
+  /* padding: 5px 0px 5px 0px; */
+}
+
+.Submenu {
+  width: 650px;
+  display: flex;
+  justify-content: center;
+}
+
+.Item {
+  margin: 0px 10px 0px 10px;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  /* background-color: red; */
+}
+
+.Selection_Easy {
+  margin-right: 13px;
+}
+.Selection_Hard {
+  margin-left: 13px;
+}
+
+.Selection_Restart {
+  margin-left: 20px;
+}
+
+.Selection {
+  margin: 0px 15px 0px 15px;
+  display: inline-block;
+  /* background-color: red; */
+  padding: 2px 5px 2px 5px;
+  transition: all 0.1s ease-out;
+}
+
+.Selection:active {
+  background-color: #006bb3;
+  color: white;
+}
+
+.Selection:hover {
+  cursor: pointer;
+}
+
+.Selected_Mode {
+  background-color: #006bb3;
+  color: white;
+}

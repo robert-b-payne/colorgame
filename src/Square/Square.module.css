@@ -6,6 +6,7 @@
   margin: 10px;
   transition: all 0.4s ease-out;
   box-shadow: 1px 1px 6px;
+  box-sizing: border-box;
 }
 
 .Square:hover {
