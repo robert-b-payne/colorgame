@@ -18,7 +18,8 @@ class App extends Component {
     difficulty: "hard",
     squareState: [],
     fadeInTimerId: null,
-    fadeInCounter: 0
+    fadeInCounter: 0,
+    resetting: false
   };
   constructor() {
     super();
@@ -30,9 +31,11 @@ class App extends Component {
     this.state.correctColor = this.generateColor();
     //set a random square to the correct color
     this.correctSquare = this.chooseCorrectSquare();
-    console.log("correctSquare: " + this.correctSquare);
+    console.log(
+      "-========== correctSquare: " + this.correctSquare + " ==========-"
+    );
     this.state.squareColors[this.correctSquare] = this.state.correctColor;
-    //randomize initial background color
+    //initial background color
     this.state.prevCorrectColor = [255, 0, 102];
   }
 
@@ -51,39 +54,47 @@ class App extends Component {
   };
 
   squareClickedHandler = (color, index) => {
-    console.log("square clicked with value: " + color);
+    // console.log("square clicked with value: " + color);
     if (this.state.correctColor === color) {
-      console.log("you guessed correctly!!");
+      // console.log("you guessed correctly!!");
 
-      this.reset();
+      this.reset(true);
     } else {
-      console.log("wrong choice!");
+      // console.log("wrong choice!");
       let squareState = [...this.state.squareState];
       squareState[index] = false;
       this.setState({ squareState: squareState });
     }
   };
 
-  reset = () => {
+  reset = correctGuess => {
     // debugger;
+    //stop current reset is already in progress
+    console.log("inside reset with difficulty: " + this.state.difficulty);
+    if (this.state.resetting) {
+      clearInterval(this.state.fadeInTimerId);
+    }
     let squareState = [];
     for (let i = 0; i < 6; i++) {
       squareState.push(false);
     }
-    this.setState({ squareState: squareState }, this.fadeIn());
+    this.setState(
+      { squareState: squareState, resetting: true, fadeInCounter: 0 },
+      this.fadeIn(correctGuess)
+    );
   };
 
-  fadeIn = () => {
-    console.log("inside fadeIn");
-    console.log("squareState: " + this.state.squareState);
+  fadeIn = correctGuess => {
+    // console.log("inside fadeIn");
+    // console.log("squareState: " + this.state.squareState);
     // this.setState({ squareState: squareState });
     let squareColors = [];
     let correctColor = [];
     let correctSquare;
     let timerId = setInterval(() => {
-      console.log("inside timer . . . ");
+      // console.log("inside timer . . . ");
       let squareState = [...this.state.squareState];
-      console.log("squareState: " + this.state.squareState);
+      // console.log("squareState: " + this.state.squareState);
       squareState[this.state.fadeInCounter] = true;
       this.setState({
         squareState: squareState,
@@ -91,7 +102,7 @@ class App extends Component {
       });
       if (this.state.fadeInCounter > 5) {
         console.log("timer ended!");
-        this.setState({ fadeInCounter: 0 });
+        this.setState({ fadeInCounter: 0, resetting: false });
         clearInterval(this.state.fadeInTimerId);
       }
     }, 100);
@@ -103,24 +114,29 @@ class App extends Component {
     correctColor = this.generateColor();
     //set a random square to the correct color
     correctSquare = this.chooseCorrectSquare();
-    console.log("correctSquare: " + correctSquare);
+    console.log("-========== correctSquare: " + correctSquare + " ==========-");
     squareColors[correctSquare] = correctColor;
 
     this.setState({
       squareColors: squareColors,
       correctColor: correctColor,
-      prevCorrectColor: this.state.correctColor
+      prevCorrectColor: correctGuess
+        ? this.state.correctColor
+        : this.state.prevCorrectColor
       // squareState: squareState
     });
   };
 
   resetHandler = () => {
-    this.reset();
+    this.reset(false);
   };
 
-  changeDifficultyHandler = difficulty => {
-    console.log("changeDifficultyHandler!");
-    this.setState({ difficulty: difficulty }, this.reset());
+  changeDifficultyHandler = nextDifficulty => {
+    console.log("changeDifficultyHandler called with value " + nextDifficulty);
+    // setTimeout(() => {
+    //   this.setState({ difficulty: nextDifficulty }, this.reset(false));
+    // }, 3000);
+    this.setState({ difficulty: nextDifficulty }, () => this.reset(false));
   };
 
   render() {
@@ -135,6 +151,7 @@ class App extends Component {
           changeDifficultyHandler={difficulty =>
             this.changeDifficultyHandler(difficulty)
           }
+          selected={this.state.difficulty}
         />
         <Grid
           difficulty={this.state.difficulty}

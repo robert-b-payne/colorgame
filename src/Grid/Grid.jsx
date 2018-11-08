@@ -37,16 +37,20 @@ const Grid = props => {
       );
   }
 
-  // console.log("rendering gridRow1: ");
-  // console.log(gridRow1);
-  // console.log("rendering gridRow2: ");
-  // console.log(gridRow2);
+  let gridClasses = [classes.Grid];
+  if (props.difficulty === "easy") {
+    gridClasses.push(classes.Collapsed);
+  }
+
+  gridClasses = gridClasses.join(" ");
 
   return (
-    <React.Fragment>
-      <div className={classes.Row}>{gridRow1} </div>
-      <div className={classes.Row}>{gridRow2} </div>
-    </React.Fragment>
+    <div className={gridClasses}>
+      <div className={classes.innerGridContainer}>
+        <div className={classes.Row}>{gridRow1} </div>
+        <div className={classes.Row}>{gridRow2} </div>
+      </div>
+    </div>
   );
 };
 

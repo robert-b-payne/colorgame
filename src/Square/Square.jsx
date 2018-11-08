@@ -11,7 +11,6 @@ const Square = props => {
         backgroundColor: `rgb(${props.color[0]},${props.color[1]},${
           props.color[2]
         })`,
-        // visibility: !props.visibility ? "hidden" : "visible"
         opacity: !props.visibility ? "0" : "1"
       }}
       onClick={() => props.clickHandler(props.color, props.index)}

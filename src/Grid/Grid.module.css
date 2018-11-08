@@ -7,3 +7,33 @@
   /* background-color: red; */
   justify-content: center;
 }
+
+.Grid {
+  margin: 65px auto 65px auto;
+  /* margin: auto auto auto auto; */
+  height: 460px;
+  transition: all 0.85s ease-out;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center; */
+  position: relative;
+}
+
+.Collapsed {
+  height: 225px;
+  /* height: 0px; */
+}
+
+.innerGridContainer {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  margin: auto;
+}
+
+/* div img.thing {
+  position: absolute;
+  right:0;
+  bottom:0;
+  } */

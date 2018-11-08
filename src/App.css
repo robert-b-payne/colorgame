@@ -1,4 +1,16 @@
 .App {
   text-align: center;
   background-color: #f2f4f8;
+  height: 100%;
 }
+
+body {
+  text-align: center;
+  /* background-color: purple; */
+  height: 100%;
+  transition: all 1s ease-out;
+}
+
+/* .black {
+  background-color: black;
+} */
