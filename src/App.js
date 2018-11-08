@@ -23,7 +23,7 @@ class App extends Component {
   constructor() {
     super();
     //initialize square colors and correctColor
-    for (let i = 0; i < (this.state.difficulty === "easy" ? 3 : 6); i++) {
+    for (let i = 0; i < 6; i++) {
       this.state.squareColors[i] = this.generateColor();
       this.state.squareState[i] = true;
     }
@@ -67,7 +67,7 @@ class App extends Component {
   reset = () => {
     // debugger;
     let squareState = [];
-    for (let i = 0; i < (this.state.difficulty === "easy" ? 3 : 6); i++) {
+    for (let i = 0; i < 6; i++) {
       squareState.push(false);
     }
     this.setState({ squareState: squareState }, this.fadeIn());
@@ -89,16 +89,14 @@ class App extends Component {
         squareState: squareState,
         fadeInCounter: this.state.fadeInCounter + 1
       });
-      if (
-        this.state.fadeInCounter > (this.state.difficulty === "easy" ? 2 : 5)
-      ) {
+      if (this.state.fadeInCounter > 5) {
         console.log("timer ended!");
         this.setState({ fadeInCounter: 0 });
         clearInterval(this.state.fadeInTimerId);
       }
     }, 100);
     this.setState({ fadeInTimerId: timerId });
-    for (let i = 0; i < (this.state.difficulty === "easy" ? 3 : 6); i++) {
+    for (let i = 0; i < 6; i++) {
       squareColors[i] = this.generateColor();
       // squareState[i] = false;
     }
