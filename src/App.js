@@ -36,7 +36,7 @@ class App extends Component {
       "-========== correctSquare: " + this.state.correctSquare + " ==========-"
     );
     console.log("correctColor: " + this.state.correctColor);
-    this.state.squareColors[this.correctSquare] = this.state.correctColor;
+    this.state.squareColors[this.state.correctSquare] = this.state.correctColor;
     //initial background color
     this.state.prevCorrectColor = [255, 0, 102];
   }
