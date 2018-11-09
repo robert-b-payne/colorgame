@@ -19,7 +19,8 @@ class App extends Component {
     squareState: [],
     fadeInTimerId: null,
     fadeInCounter: 0,
-    resetting: false
+    resetting: false,
+    minColorDistance: 150
   };
   constructor() {
     super();
@@ -30,10 +31,11 @@ class App extends Component {
     }
     this.state.correctColor = this.generateColor();
     //set a random square to the correct color
-    this.correctSquare = this.chooseCorrectSquare();
+    this.state.correctSquare = this.chooseCorrectSquare();
     console.log(
-      "-========== correctSquare: " + this.correctSquare + " ==========-"
+      "-========== correctSquare: " + this.state.correctSquare + " ==========-"
     );
+    console.log("correctColor: " + this.state.correctColor);
     this.state.squareColors[this.correctSquare] = this.state.correctColor;
     //initial background color
     this.state.prevCorrectColor = [255, 0, 102];
@@ -84,6 +86,8 @@ class App extends Component {
     );
   };
 
+  //1 find correctColor and correctSquare
+
   fadeIn = correctGuess => {
     // console.log("inside fadeIn");
     // console.log("squareState: " + this.state.squareState);
@@ -91,14 +95,29 @@ class App extends Component {
     let squareColors = [];
     let correctColor = [];
     let correctSquare;
+
+    correctColor = this.generateColor();
+    correctSquare = this.chooseCorrectSquare();
+    console.log("-========== correctSquare: " + correctSquare + " ==========-");
+    console.log("correctColor: " + correctColor);
+
     let timerId = setInterval(() => {
       // console.log("inside timer . . . ");
       let squareState = [...this.state.squareState];
       // console.log("squareState: " + this.state.squareState);
       squareState[this.state.fadeInCounter] = true;
+
+      squareColors = [...this.state.squareColors];
+      squareColors[this.state.fadeInCounter] =
+        this.state.fadeInCounter === correctSquare
+          ? correctColor
+          : this.generateColor();
+
+      //add color update
       this.setState({
         squareState: squareState,
-        fadeInCounter: this.state.fadeInCounter + 1
+        fadeInCounter: this.state.fadeInCounter + 1,
+        squareColors: squareColors
       });
       if (this.state.fadeInCounter > 5) {
         console.log("timer ended!");
@@ -107,18 +126,8 @@ class App extends Component {
       }
     }, 100);
     this.setState({ fadeInTimerId: timerId });
-    for (let i = 0; i < 6; i++) {
-      squareColors[i] = this.generateColor();
-      // squareState[i] = false;
-    }
-    correctColor = this.generateColor();
-    //set a random square to the correct color
-    correctSquare = this.chooseCorrectSquare();
-    console.log("-========== correctSquare: " + correctSquare + " ==========-");
-    squareColors[correctSquare] = correctColor;
-
     this.setState({
-      squareColors: squareColors,
+      // squareColors: squareColors,
       correctColor: correctColor,
       prevCorrectColor: correctGuess
         ? this.state.correctColor
@@ -133,9 +142,6 @@ class App extends Component {
 
   changeDifficultyHandler = nextDifficulty => {
     console.log("changeDifficultyHandler called with value " + nextDifficulty);
-    // setTimeout(() => {
-    //   this.setState({ difficulty: nextDifficulty }, this.reset(false));
-    // }, 3000);
     this.setState({ difficulty: nextDifficulty }, () => this.reset(false));
   };
 
