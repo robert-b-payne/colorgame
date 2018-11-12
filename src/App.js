@@ -20,7 +20,7 @@ class App extends Component {
     fadeInTimerId: null,
     fadeInCounter: 0,
     resetting: false,
-    minColorDistance: 150
+    minColorDistance: 15
   };
   constructor() {
     super();
@@ -32,13 +32,13 @@ class App extends Component {
     this.state.correctColor = this.generateColor();
     //set a random square to the correct color
     this.state.correctSquare = this.chooseCorrectSquare();
-    console.log(
-      "-========== correctSquare: " + this.state.correctSquare + " ==========-"
-    );
-    console.log("correctColor: " + this.state.correctColor);
+    // console.log(
+    //   "-========== correctSquare: " + this.state.correctSquare + " ==========-"
+    // );
+    // console.log("correctColor: " + this.state.correctColor);
     this.state.squareColors[this.state.correctSquare] = this.state.correctColor;
     //initial background color
-    this.state.prevCorrectColor = [255, 0, 102];
+    this.state.prevCorrectColor = [0, 107, 179];
   }
 
   chooseCorrectSquare = () => {
@@ -72,7 +72,7 @@ class App extends Component {
   reset = correctGuess => {
     // debugger;
     //stop current reset is already in progress
-    console.log("inside reset with difficulty: " + this.state.difficulty);
+    // console.log("inside reset with difficulty: " + this.state.difficulty);
     if (this.state.resetting) {
       clearInterval(this.state.fadeInTimerId);
     }
@@ -98,8 +98,8 @@ class App extends Component {
 
     correctColor = this.generateColor();
     correctSquare = this.chooseCorrectSquare();
-    console.log("-========== correctSquare: " + correctSquare + " ==========-");
-    console.log("correctColor: " + correctColor);
+    // console.log("-========== correctSquare: " + correctSquare + " ==========-");
+    // console.log("correctColor: " + correctColor);
 
     let timerId = setInterval(() => {
       // console.log("inside timer . . . ");
@@ -120,7 +120,7 @@ class App extends Component {
         squareColors: squareColors
       });
       if (this.state.fadeInCounter > 5) {
-        console.log("timer ended!");
+        // console.log("timer ended!");
         this.setState({ fadeInCounter: 0, resetting: false });
         clearInterval(this.state.fadeInTimerId);
       }
@@ -141,7 +141,7 @@ class App extends Component {
   };
 
   changeDifficultyHandler = nextDifficulty => {
-    console.log("changeDifficultyHandler called with value " + nextDifficulty);
+    // console.log("changeDifficultyHandler called with value " + nextDifficulty);
     this.setState({ difficulty: nextDifficulty }, () => this.reset(false));
   };
 
